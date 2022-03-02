@@ -14,7 +14,7 @@ fn insertionsort(numbers: &mut Vec<isize>, start: usize, end: usize) {
     }
 }
 
-fn partition(numbers: &mut Vec<isize>, start: isize, end: isize) -> usize {
+fn partition(numbers: &mut Vec<isize>, start: isize, end: isize) -> isize {
     // Hoare's Partition Scheme using middle index as pivot
     let pivot = numbers[((start + end) / 2) as usize];
     let mut i = start - 1;
@@ -30,9 +30,8 @@ fn partition(numbers: &mut Vec<isize>, start: isize, end: isize) -> usize {
             j -= 1;
         }
         if i >= j {
-            return j as usize;
+            return j;
         }
-
         numbers.swap(i as usize, j as usize);
     }
 }
@@ -40,7 +39,7 @@ fn partition(numbers: &mut Vec<isize>, start: isize, end: isize) -> usize {
 fn quicksort(numbers: &mut Vec<isize>, start: isize, end: isize) {
     if start >= end { return; }
 
-    if end - start < 11 {   // Insertion sort on smaller arrays
+    if end - start < 15 {   // Insertion sort on smaller arrays
         insertionsort(numbers, start as usize, end as usize);
         return;
     }
@@ -49,7 +48,7 @@ fn quicksort(numbers: &mut Vec<isize>, start: isize, end: isize) {
     let pivot_index = partition(numbers, start, end);
 
     // Left of pivot
-    quicksort(numbers, start, (pivot_index) as isize);
+    quicksort(numbers, start, pivot_index as isize);
 
     // Right of pivot
     quicksort(numbers, (pivot_index + 1) as isize, end);
@@ -57,7 +56,7 @@ fn quicksort(numbers: &mut Vec<isize>, start: isize, end: isize) {
 
 fn main() {
     // Input
-    let mut line = String::with_capacity(3_000_000);
+    let mut line = String::with_capacity(1_000_000);
     io::stdin().lock().read_line(&mut line);
     
     let mut values: Vec<isize> = line
