@@ -54,10 +54,10 @@ fn quicksort(numbers: &mut Vec<isize>, start: isize, end: isize) {
     quicksort(numbers, (pivot_index + 1) as isize, end);
 }
 
-fn main() {
+fn main() -> io::Result<()> {
     // Input
     let mut line = String::with_capacity(1_000_000);
-    io::stdin().lock().read_line(&mut line);
+    io::stdin().lock().read_line(&mut line)?;
     
     let mut values: Vec<isize> = line
         .split_whitespace()
@@ -76,4 +76,5 @@ fn main() {
         output.push_str(" ");
     }
     println!("{}", output);
+    Ok(())
 }
